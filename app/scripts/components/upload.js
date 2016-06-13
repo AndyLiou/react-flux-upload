@@ -5,7 +5,8 @@ import UploadStore from '../stores/UploadStore'
 
 function getFilesFromStore() {
   return {
-    files: UploadStore.getFiles()
+    files: UploadStore.getFiles(),
+    preview_src: ""
   };
 }
 
@@ -52,6 +53,13 @@ export default React.createClass({
     UploadAction.deleteFile(files[fileIndex].id, fileIndex);
   },
 
+  previewImg(e) {
+    this.setState({
+      preview_src: e.target.src
+    });
+    $('#imagemodal').modal('show');
+  },
+
   _onChange() {
     this.setState(getFilesFromStore());
   },
@@ -81,13 +89,14 @@ export default React.createClass({
       return(
         <div className='row preview-row' key={index}>
           <p style={barWidth}></p>
-          <div className='col-xs-2' style={row_padding}><div className='img-wrapper'><img src={value.preview} /></div></div>
+          <div className='col-xs-2' style={row_padding}><div className='img-wrapper'><img src={value.preview} onClick={that.previewImg}/></div></div>
           <div className='col-xs-5 filename'><span>{value.name}</span> {message}</div>
           <div className='col-xs-2 text-right' style={row_padding}>{Math.ceil(value.size / 1024)} kb</div>
           <div className='col-xs-3 text-right' style={row_padding}>
+            &nbsp;
             <button type="button" className={'btn btn-danger ' + (!value.id ? 'hidden':'')} onClick={that.deleteFile} value={index}>刪除</button>&nbsp;
             <button type="button" className={'btn btn-primary ' + (value.id ? 'hidden':'')} onClick={that.uploadFile} value={index}>上傳</button>&nbsp;
-            <button type="button" className={'btn btn-warning ' + (value.id ? 'hidden':'')} onClick={that.cancelFile} value={index}>取消</button>
+            <button type="button" className={'btn btn-warning ' + (value.id ? 'hidden':'')} onClick={that.cancelFile} value={index}>取消</button>&nbsp;
           </div>
         </div>
       );
@@ -102,12 +111,26 @@ export default React.createClass({
             <div>拖拉檔案至此或點擊選擇檔案</div>
           </Dropzone>
 
-          <div className="form-group">
-            {this.state.files.length ? <button className='btn btn-primary' onClick={this.uploadAllFile}>全部上傳</button> : ''}
+          <div className="form-group text-right">
+            {this.state.files.length ? <button className='btn btn-success' onClick={this.uploadAllFile}>全部上傳</button> : ''}
           </div>
 
           <div className='dropzone-preview'>
             {this.state.files.length > 0 ? this.state.files.map(imagePreview) : null}
+          </div>
+        </div>
+
+        <div className="modal fade text-center" id="imagemodal" tabindex="-1" role="dialog">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 className="modal-title">圖片預覽</h4>
+              </div>
+              <div className="modal-body">
+                <img src={this.state.preview_src}/>
+              </div>
+            </div>
           </div>
         </div>
       </div>

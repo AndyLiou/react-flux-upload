@@ -1,4 +1,4 @@
-var uploadAPIUrl = "http://localhost/test/api_upload.php",
+var uploadAPIUrl = "http://profitget.net/api/file/upload/",
 		deleteAPIUrl = "";
 
 module.exports = {
@@ -12,8 +12,9 @@ module.exports = {
 				url: uploadAPIUrl,
 				type: 'POST',
 				data: {
-					data: event.target.result,
-					fileName: filename
+					auth_token: '',
+					file_name: filename,
+					file_data: event.target.result
 				},
 				xhr: function() {
           var myXhr = $.ajaxSettings.xhr();
@@ -29,9 +30,16 @@ module.exports = {
           }
           return myXhr;
         },
-				success: function(response) {
-					var obj = JSON.parse(response);
-					callback(obj);
+				statusCode: {
+					200: function (response) {
+		         alert('1');
+		         console.log(response);
+		      }
+				},
+				success: function(data, textStatus, xhr) {
+
+					// var obj = JSON.parse(response);
+					// callback(obj);
         }
 			})
 		};

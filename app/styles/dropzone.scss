@@ -49,8 +49,8 @@
   max-width:100%;
   max-height:100%;
   display:inline-block;
+  cursor: pointer;
 }
-
 
 .dropzone-preview .preview-row p {
 	display: block;
@@ -59,3 +59,35 @@
   margin-bottom: 5px;
   background-color: #00da5e;
 }
+
+/* image preview */
+
+#imagemodal {
+  .modal-dialog {
+    display: inline-block;
+    width: auto;
+
+    .modal-content {
+      display: inline-block;
+
+      img {
+        max-width:100%;
+        max-height:100%;
+      }
+    }
+  }
+}
+
+@media(max-width:768px) {
+  #imagemodal {
+    .modal-dialog {
+      display: block;
+
+      .modal-content {
+        display: block;
+      }
+    }
+  }
+}
+
+/* image preview */
