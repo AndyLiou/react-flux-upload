@@ -13,7 +13,7 @@ module.exports = {
 				type: 'POST',
 				data: {
 					auth_token: '',
-					file_name: "",
+					file_name: filename,
 					file_data: event.target.result
 				},
 				dataType: 'json',

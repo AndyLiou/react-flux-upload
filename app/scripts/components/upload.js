@@ -53,7 +53,7 @@ export default React.createClass({
     var fileIndex = parseInt(e.target.value, 10);
     var files = this.state.files;
 
-    var fileId = files[taskIndex].id;
+    var fileId = files[fileIndex].id;
     UploadAction.deleteFile(files[fileIndex].id, fileIndex);
   },
 
@@ -67,8 +67,8 @@ export default React.createClass({
   _onChange() {
     this.setState(getFilesFromStore());
 
-    if(returnFiles) {
-      this.props.returnFiles(this.state.files);
+    if(this.props.returnFiles) {
+      this.props.returnFiles(UploadStore.getFiles());
     }
   },
 
