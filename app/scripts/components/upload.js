@@ -11,6 +11,10 @@ function getFilesFromStore() {
 }
 
 export default React.createClass({
+  propTypes:{
+    returnFiles: React.PropTypes.func
+  },
+
   getInitialState() {
     return {
       files: []
@@ -62,6 +66,10 @@ export default React.createClass({
 
   _onChange() {
     this.setState(getFilesFromStore());
+
+    if(returnFiles) {
+      this.props.returnFiles(this.state.files);
+    }
   },
 
   render() {

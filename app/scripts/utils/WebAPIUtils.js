@@ -13,9 +13,13 @@ module.exports = {
 				type: 'POST',
 				data: {
 					auth_token: '',
-					file_name: filename,
+					file_name: "",
 					file_data: event.target.result
 				},
+				dataType: 'json',
+				xhrFields: {
+			    withCredentials: false
+			  },
 				xhr: function() {
           var myXhr = $.ajaxSettings.xhr();
           if(myXhr.upload){
@@ -30,17 +34,30 @@ module.exports = {
           }
           return myXhr;
         },
-				statusCode: {
-					200: function (response) {
-		         alert('1');
-		         console.log(response);
-		      }
-				},
-				success: function(data, textStatus, xhr) {
+				complete: function(data, status) {
+					var responseData = {};
+					switch (data.status) {
+						case 200:
+							console.log(data);
+							responseData.item = data.responseJSON;
+							responseData.status = 'success';
+							break;
+						case 400:
+							console.log(data);
+							responseData.status = 'error';
+							responseData.message = data.responseJSON['error'];
+							break;
+						case 403:
+							responseData.status = 'error';
+							responseData.message = data.responseJSON['error'];
+							break;
+						default:
+							responseData.status = 'error';
+							responseData.message = data.responseJSON['error'];
+					}
 
-					// var obj = JSON.parse(response);
-					// callback(obj);
-        }
+					// callback(responseData);
+	    	}
 			})
 		};
 	},
