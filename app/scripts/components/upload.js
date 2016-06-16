@@ -23,10 +23,17 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    this.setState({
-      files: this.props.files
-    });
     UploadStore.addChangeListener(this._onChange);
+
+    this.props.files.map(function(value, index) {
+      UploadAction.addFile(value);
+    })
+  },
+
+  componentWillReceiveProps() {
+    this.props.files.map(function(value, index) {
+      UploadAction.addFile(value);
+    })
   },
 
   componentWillUnmount() {

@@ -6,7 +6,11 @@ var Dispatcher = require('../dispatcher/AppDispatcher'),
 var fileList = [];
 
 function addFileToList(file) {
-	fileList.push.apply(fileList, file);
+	if(file instanceof Array) {
+		fileList.push(file[0]);
+	} else {
+		fileList.push(file);
+	}
 }
 
 function cancelFileFromList(fileIndex) {
@@ -14,8 +18,8 @@ function cancelFileFromList(fileIndex) {
 }
 
 function uploadResult(data) {
-	if(data.id) {
-		fileList[data.index].id = data.id;
+	if(data.file_id) {
+		fileList[data.index].id = data.file_id;
 	}
 	if(data.progress) {
 		fileList[data.index].progress = data.progress;

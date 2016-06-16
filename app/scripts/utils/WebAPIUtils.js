@@ -2,6 +2,7 @@ var uploadAPIUrl = "http://profitget.net/api/file/upload/",
 		deleteAPIUrl = "";
 
 module.exports = {
+
 	uploadFile: function(file, callback) {
 		var reader = new FileReader();
 		reader.readAsDataURL(file);
