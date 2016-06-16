@@ -12,6 +12,7 @@ function getFilesFromStore() {
 
 export default React.createClass({
   propTypes:{
+    files: React.PropTypes.array,
     returnFiles: React.PropTypes.func
   },
 
@@ -22,6 +23,9 @@ export default React.createClass({
   },
 
   componentDidMount() {
+    this.setState({
+      files: this.props.files
+    });
     UploadStore.addChangeListener(this._onChange);
   },
 
@@ -97,7 +101,11 @@ export default React.createClass({
       return(
         <div className='row preview-row' key={index}>
           <p style={barWidth}></p>
-          <div className='col-xs-2' style={row_padding}><div className='img-wrapper'><img src={value.preview} onClick={that.previewImg}/></div></div>
+          <div className='col-xs-2' style={row_padding}>
+            <div className='img-wrapper'>
+              <img src={value.preview} onClick={that.previewImg}/>
+            </div>
+          </div>
           <div className='col-xs-5 filename'><span>{value.name}</span> {message}</div>
           <div className='col-xs-2 text-right' style={row_padding}>{Math.ceil(value.size / 1024)} kb</div>
           <div className='col-xs-3 text-right' style={row_padding}>

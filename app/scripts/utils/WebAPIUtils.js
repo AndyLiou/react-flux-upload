@@ -38,12 +38,10 @@ module.exports = {
 					var responseData = {};
 					switch (data.status) {
 						case 200:
-							console.log(data);
 							responseData.item = data.responseJSON;
 							responseData.status = 'success';
 							break;
 						case 400:
-							console.log(data);
 							responseData.status = 'error';
 							responseData.message = data.responseJSON['error'];
 							break;
@@ -56,7 +54,7 @@ module.exports = {
 							responseData.message = data.responseJSON['error'];
 					}
 
-					// callback(responseData);
+					callback(responseData);
 	    	}
 			})
 		};
