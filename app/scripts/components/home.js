@@ -1,18 +1,49 @@
 import React from 'react'
 import Upload from './upload'
+import AppAction from '../actions/AppAction'
+import AppStore from '../stores/AppStore'
 
 export default React.createClass({
+	getInitialState() {
+    return {
+      item: {}
+    };
+  },
+
+	componentDidMount() {
+		AppAction.getItem();
+		AppStore.addChangeListener(this._onChange);
+	},
+
+	componentWillUnmount() {
+		AppStore.removeChangeListener(this._onChange);
+	},
+
+	_onChange() {
+		this.setState({
+			item: AppStore.getItem()
+		});
+		this.forceUpdate();
+	},
+
 	render() {
 
-		var img = [
-			{id:1,name:"test.png",size:432509, preview:"http://qnimate.com/wp-content/uploads/2014/03/images2.jpg"},
-			{id:2,name:"test.png",size:432509, preview:"http://qnimate.com/wp-content/uploads/2014/03/images2.jpg"}
-		];
+		var that = this;
+
+		var getImages = function() {
+			var array = [];
+			if(that.state.item.images){
+				that.state.item.images.map(function(value, index) {
+					array.push({id: value.img_id,name: "123.png", size:440050, preview:value.img_url});
+				})
+			}
+			return array;
+		}
 
 		return (
 			<div>
 				<Upload
-					files={img}
+					files={getImages()}
 				/>
 			</div>
 		);

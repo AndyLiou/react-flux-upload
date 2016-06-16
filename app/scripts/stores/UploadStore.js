@@ -1,7 +1,8 @@
 var Dispatcher = require('../dispatcher/AppDispatcher'),
 	Constants = require('../constants/UploadConstants'),
 	EventEmitter = require('events').EventEmitter,
-	assign = require('object-assign');
+	assign = require('object-assign'),
+	AppStore = require('../stores/AppStore');
 
 var fileList = [];
 

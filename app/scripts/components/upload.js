@@ -24,15 +24,13 @@ export default React.createClass({
 
   componentDidMount() {
     UploadStore.addChangeListener(this._onChange);
-
-    this.props.files.map(function(value, index) {
-      UploadAction.addFile(value);
-    })
   },
 
   componentWillReceiveProps() {
     this.props.files.map(function(value, index) {
-      UploadAction.addFile(value);
+      setTimeout(function(){
+        UploadAction.addFile(value);
+      }, 200);
     })
   },
 

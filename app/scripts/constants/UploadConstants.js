@@ -5,5 +5,6 @@ module.exports = keyMirror({
 	UPLOAD_FILE: null,
 	CANCEL_FILE: null,
 	DELETE_FILE: null,
+	GET_ITEM:null,
 	ADD_FILE: null
 });

@@ -2,7 +2,38 @@ var uploadAPIUrl = "http://profitget.net/api/file/upload/",
 		deleteAPIUrl = "";
 
 module.exports = {
+		getItem:function(callback) {
+			$.ajax({
+				url: 'http://profitget.net/api/product/info/',
+				type: 'GET',
+				data: {
+					product_id: 'AwyyZTD2LwqyMwSuAQqxATD1Mwt2ZGxjAwuyBQZ0MGuWnxIc'
+				},
+				dataType: 'json',
+				complete: function(data, status) {
+					var responseData = {};
+					switch (data.status) {
+						case 200:
+							responseData.item = data.responseJSON;
+							responseData.status = 'success';
+							break;
+						case 400:
+							responseData.status = 'error';
+							responseData.message = data.responseJSON['error'];
+							break;
+						case 403:
+							responseData.status = 'error';
+							responseData.message = data.responseJSON['error'];
+							break;
+						default:
+							responseData.status = 'error';
+							responseData.message = data.responseJSON['error'];
+					}
 
+					callback(responseData);
+				}
+			})
+	},
 	uploadFile: function(file, callback) {
 		var reader = new FileReader();
 		reader.readAsDataURL(file);
