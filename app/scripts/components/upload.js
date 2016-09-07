@@ -13,7 +13,8 @@ function getFilesFromStore() {
 export default React.createClass({
   propTypes:{
     files: React.PropTypes.array,
-    returnFiles: React.PropTypes.func
+    returnFiles: React.PropTypes.func,
+    multiple: React.PropTypes.bool
   },
 
   getInitialState() {
@@ -39,7 +40,7 @@ export default React.createClass({
   },
 
   onDrop(file) {
-    UploadAction.addFile(file)
+    UploadAction.addFile(file, this.props.multiple)
   },
 
   uploadFile(e) {
@@ -115,9 +116,9 @@ export default React.createClass({
           <div className='col-xs-2 text-right' style={row_padding}>{Math.ceil(value.size / 1024)} kb</div>
           <div className='col-xs-3 text-right' style={row_padding}>
             &nbsp;
-            <button type="button" className={'btn btn-danger ' + (!value.id ? 'hidden':'')} onClick={that.deleteFile} value={index}>刪除</button>&nbsp;
-            <button type="button" className={'btn btn-primary ' + (value.id ? 'hidden':'')} onClick={that.uploadFile} value={index}>上傳</button>&nbsp;
-            <button type="button" className={'btn btn-warning ' + (value.id ? 'hidden':'')} onClick={that.cancelFile} value={index}>取消</button>&nbsp;
+            <button type="button" className={'btn btn-danger ' + (!value.file_id ? 'hidden':'')} onClick={that.deleteFile} value={index}>刪除</button>&nbsp;
+            <button type="button" className={'btn btn-primary ' + (value.file_id ? 'hidden':'')} onClick={that.uploadFile} value={index}>上傳</button>&nbsp;
+            <button type="button" className={'btn btn-warning ' + (value.file_id ? 'hidden':'')} onClick={that.cancelFile} value={index}>取消</button>&nbsp;
           </div>
         </div>
       );
@@ -128,6 +129,7 @@ export default React.createClass({
         <div className='dropzone'>
           <Dropzone
             onDrop={this.onDrop}
+            multiple={this.props.multiple}
           >
             <div>拖拉檔案至此或點擊選擇檔案</div>
           </Dropzone>

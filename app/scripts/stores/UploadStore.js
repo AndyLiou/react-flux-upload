@@ -1,8 +1,7 @@
 var Dispatcher = require('../dispatcher/AppDispatcher'),
 	Constants = require('../constants/UploadConstants'),
 	EventEmitter = require('events').EventEmitter,
-	assign = require('object-assign'),
-	AppStore = require('../stores/AppStore');
+	assign = require('object-assign');
 
 var fileList = [];
 
@@ -20,7 +19,7 @@ function cancelFileFromList(fileIndex) {
 
 function uploadResult(data) {
 	if(data.file_id) {
-		fileList[data.index].id = data.file_id;
+		fileList[data.index].file_id = data.file_id;
 	}
 	if(data.progress) {
 		fileList[data.index].progress = data.progress;
@@ -66,6 +65,9 @@ UploadStore.dispatchToken = Dispatcher.register(function(action) {
 	switch(action.actionType) {
 		case Constants.ADD_FILE:
 			addFileToList(action.data);
+		break;
+		case Constants.ADD_SINGLE_FILE:
+			fileList[0] = action.data;
 		break;
 		case Constants.CANCEL_FILE:
 			cancelFileFromList(action.data);

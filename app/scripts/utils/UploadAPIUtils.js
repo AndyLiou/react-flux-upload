@@ -14,16 +14,8 @@ module.exports = {
 					var responseData = {};
 					switch (data.status) {
 						case 200:
-							responseData.item = data.responseJSON;
+							responseData = data.responseJSON;
 							responseData.status = 'success';
-							break;
-						case 400:
-							responseData.status = 'error';
-							responseData.message = data.responseJSON['error'];
-							break;
-						case 403:
-							responseData.status = 'error';
-							responseData.message = data.responseJSON['error'];
 							break;
 						default:
 							responseData.status = 'error';

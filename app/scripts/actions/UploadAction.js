@@ -1,14 +1,21 @@
 var Dispatcher = require('../dispatcher/AppDispatcher'),
 		Constants = require('../constants/UploadConstants'),
-		WebAPIUtils = require('../utils/WebAPIUtils');
+		WebAPIUtils = require('../utils/UploadAPIUtils');
 
 var TestActions = {
 
-	addFile: function(file) {
-		Dispatcher.dispatch({
-			actionType: Constants.ADD_FILE,
-			data: file
-		})
+	addFile: function(file, multiple) {
+		if(multiple) {
+			Dispatcher.dispatch({
+				actionType: Constants.ADD_FILE,
+				data: file
+			})
+		} else {
+			Dispatcher.dispatch({
+				actionType: Constants.ADD_SINGLE_FILE,
+				data: file
+			})
+		}
 	},
 
 	cancelFile: function(fileIndex) {

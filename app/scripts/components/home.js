@@ -44,6 +44,7 @@ export default React.createClass({
 			<div>
 				<Upload
 					files={getImages()}
+					multiple={true}
 				/>
 			</div>
 		);
